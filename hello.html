@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karan Kshetri | Portfolio Pro</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #00f2fe;
+            --accent-2: #4facfe;
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
+        }
+
+        /* Hero Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            background: linear-gradient(to right, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .typing-text {
+            font-size: 1.5rem;
+            color: var(--accent);
+            height: 30px;
+        }
+
+        /* Container & Sections */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: 1s all ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::after {
+            content: "";
+            height: 2px;
+            flex-grow: 1;
+            background: linear-gradient(to right, var(--accent), transparent);
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 20px;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent);
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.1);
+        }
+
+        .hobby-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Education Timeline */
+        .edu-item {
+            border-left: 2px solid var(--accent);
+            padding-left: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .edu-item::before {
+            content: "";
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .edu-year {
+            color: var(--accent);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-box h3 {
+            font-size: 3rem;
+            color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 100px 20px;
+            border-top: 1px solid var(--glass-border);
+            color: #666;
+        }
+
+        /* Button Style */
+        .btn {
+            padding: 15px 35px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            border-radius: 50px;
+            transition: 0.3s;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            color: black;
+            box-shadow: 0 0 20px var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-bg"></canvas>
+
+    <header>
+        <div class="hero-content">
+            <p style="letter-spacing: 5px; color: var(--accent);">HELLO, I AM</p>
+            <h1>KARAN KSHETRI</h1>
+            <div class="typing-text" id="typewriter"></div>
+            <a href="#about" class="btn">Explore My World</a>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <section id="about">
+            <h2 class="section-title">Discovery</h2>
+            <div class="grid">
+                <div class="glass-card">
+                    <h3>The Profile</h3>
+                    <p style="margin-top:15px; color: #ccc;">A tech-driven mind currently navigating the complexities of Computer Science at PNC. Passionate about logic, strategy, and high-performance computing.</p>
+                    <div class="stats">
+                        <div class="stat-box"><h3>2+</h3><p>Years CSIT</p></div>
+                        <div class="stat-box"><h3>3</h3><p>Main Hobbies</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education">
+            <h2 class="section-title">Academic Journey</h2>
+            <div class="edu-item">
+                <span class="edu-year">2079 - PRESENT</span>
+                <h3>BSc. CSIT</h3>
+                <p>Prithvi Narayan Campus, Pokhara</p>
+            </div>
+            <div class="edu-item">
+                <span class="edu-year">2076 - 2078</span>
+                <h3>Higher Secondary (+2 Science)</h3>
+                <p>SOS Hermann Gmeiner Secondary School, Gandaki</p>
+            </div>
+        </section>
+
+        <section id="hobbies">
+            <h2 class="section-title">Lifestyles</h2>
+            <div class="grid">
+                <div class="glass-card">
+                    <i class="fas fa-gamepad hobby-icon"></i>
+                    <h3>Gaming</h3>
+                    <p>Strategic gameplay and digital world exploration.</p>
+                </div>
+                <div class="glass-card">
+                    <i class="fas fa-chess hobby-icon"></i>
+                    <h3>Chess</h3>
+                    <p>Tactical analysis and mental endurance training.</p>
+                </div>
+                <div class="glass-card">
+                    <i class="fas fa-running hobby-icon"></i>
+                    <h3>Running</h3>
+                    <p>Discipline, stamina, and physical peak performance.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Karan Kshetri. Designed for the Future.</p>
+    </footer>
+
+    <script>
+        // Typewriter Effect
+        const text = "BSc. CSIT Student | Chess Player | Runner";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        typeWriter();
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Background Particles
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(0, 242, 254, 0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 100; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
